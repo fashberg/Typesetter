@@ -515,6 +515,7 @@ namespace gp\admin{
 			$position = '';
 
 			if( \gp\tool::RequestType() != 'admin' ){
+		$reqtmp1 = &$gpAdmin['gpui_ty']; $reqtmp2 = &$gpAdmin['gpui_tx'];
 				$position = ' style="top:' . max(-10, $gpAdmin['gpui_ty']) . 'px;'
 					. 'left:' . max(-10, $gpAdmin['gpui_tx']) . 'px"';
 				if( isset($gpAdmin['gpui_cmpct']) && $gpAdmin['gpui_cmpct'] ){
@@ -765,8 +766,8 @@ namespace gp\admin{
 			echo '</li>';
 
 			$links = ob_get_clean();
+			$gpustmp3 = &$gpAdmin['useralias'];
 			self::_AdminPanelLinks($in_panel, $links, $gpAdmin['useralias'], 'fa fa-user-circle', 'use');
-
 			// stats
 			ob_start();
 			echo '<li><span><span cms-memory-usage>?</span> Memory</span></li>';
@@ -874,7 +875,7 @@ namespace gp\admin{
 			echo '<span>' . $label . '</span>';
 			echo $badge;
 			echo '</a>';
-
+$gpustmp4 = &$gpAdmin['gpui_vis'];
 			if( $gpAdmin['gpui_vis'] == $arg ){
 				echo '<div class="panelgroup2 in_window">';
 			}else{
@@ -1162,8 +1163,8 @@ namespace gp\admin{
 				}
 
 				$display = '<span class="layout_color_id" ' .
-					'style="background-color:' . $info['color'] . ';"></span>' .
-					'&nbsp; ' . $info['label'];
+					'style="background-color:' . (isset($info['color']) ? $info['color'] : 0) . ';"></span>' .
+					'&nbsp; ' . (isset($info['label']) ? $info['label'] : 0);
 				echo \gp\tool::Link(
 						'Admin_Theme_Content/Edit/' . rawurlencode($layout),
 						$display

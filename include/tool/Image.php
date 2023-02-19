@@ -75,7 +75,7 @@ namespace gp\tool{
 			$img_type = self::getType($source_path);
 			if( strpos('svgz', $img_type) === 0 ){
 				// image is SVG
-				return self::CreateRectSVG($source_path,$dest_path,$size,$size,false);
+				return self::CreateRectSVG($source_path,$dest_path,false,$size,$size);
 			}
 
 			$new_w = $new_h = $size;
@@ -131,7 +131,7 @@ namespace gp\tool{
 			$img_type = self::getType($source_path);
 			if( strpos('svgz', $img_type) === 0 ){
 				// image is SVG
-				return self::CreateRectSVG($source_path,$dest_path,$new_w,$new_h,$keep_aspect_ratio);
+				return self::CreateRectSVG($source_path,$dest_path,$keep_aspect_ratio,$new_w,$new_h);
 			}
 
 			$src_img = self::getSrcImg($source_path,$img_type);
@@ -154,10 +154,10 @@ namespace gp\tool{
 				// scale to fit into new width/height
 				if( $old_aspect_ratio > $new_aspect_ratio ){
 					// old img is wider than new one
-					$new_h = round($new_h / $old_aspect_ratio * $new_aspect_ratio);
+					$new_h = (int)(round($new_h / $old_aspect_ratio * $new_aspect_ratio));
 				}else{
 					// old img is narrower than new one
-					$new_w = round($new_w / $new_aspect_ratio * $old_aspect_ratio);
+					$new_w = (int)(round($new_w / $new_aspect_ratio * $old_aspect_ratio));
 				}
 			}else{
 				// crop to cover new width/height
@@ -205,7 +205,7 @@ namespace gp\tool{
 		 * @param string $type_file a string representing the type of the source file (svg, svgz)
 		 * @return bool
 		 */
-		static function CreateRectSVG($source_path, $dest_path, $width=50, $height=50, $keep_aspect_ratio){
+		static function CreateRectSVG($source_path, $dest_path, $keep_aspect_ratio, $width=50, $height=50, ){
 
 			$src_svg = @file_get_contents($source_path);
 			if( !$src_svg ){
@@ -221,12 +221,13 @@ namespace gp\tool{
 			*/
 
 			$internalErrors =  libxml_use_internal_errors(true);
-			$disableEntities = libxml_disable_entity_loader(true);
+			/* $disableEntities =  libxml_disable_entity_loader(true); php8 deprecated */
 			libxml_clear_errors();
+			/* $doc->loadXML(file_get_contents($filename),$options); */
 			$doc = new \DOMDocument();
 			$doc->loadXML($src_svg, LIBXML_NONET);
 			libxml_use_internal_errors($internalErrors);
-			libxml_disable_entity_loader($disableEntities);
+					
 			if( $error = libxml_get_last_error() ){
 				libxml_clear_errors();
 				// msg("SVG processing - LibXML Error: " . $error->message );

@@ -71,7 +71,9 @@ class ThemeCajon_Settings{
     $layout             = isset($page->TitleInfo['gpLayout']) ? $page->TitleInfo['gpLayout'] : 'default';
     $layout             = isset($page->gpLayout) ? $page->gpLayout : $layout;
     $default_layout     = $config['gpLayout'];
-    $current_theme_name = $layout == 'default' ? $gpLayouts[$default_layout]['name'] : $gpLayouts[$layout]['name'];
+   	$gplayoutsvar1 = $gpLayouts[$default_layout]['name'] ?? 0;
+	$gplayoutsvar2 = $gpLayouts[$layout]['name'] ?? 0;
+	$current_theme_name = $layout == 'default' ? $gplayoutsvar1 : $gplayoutsvar2;
     $is_current_theme   = ($current_theme_name == $theme_name);
     return $is_current_theme;
   }

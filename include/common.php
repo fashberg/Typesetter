@@ -13,6 +13,7 @@ if( gpdebug ){
 set_error_handler('showError');
 
 require_once('tool.php');
+require_once('thirdparty/time/strftime.php');
 
 gp_defined('gp_restrict_uploads',		false);
 gp_defined('gpdebugjs',					gpdebug);
@@ -42,14 +43,14 @@ gp_defined('notify_deprecated',			true);	// Since 5.2
 
 
 //gp_defined('CMS_DOMAIN',				'http://gpeasy.loc');
-gp_defined('CMS_DOMAIN',				'http://www.typesettercms.com');
+gp_defined('CMS_DOMAIN',				'https://www.typesettercms.com');
 gp_defined('CMS_READABLE_DOMAIN',		'TypesetterCMS.com');
 gp_defined('CMS_NAME',					'Typesetter');
 gp_defined('CMS_NAME_FULL',				'Typesetter CMS');
 gp_defined('addon_browse_path',			CMS_DOMAIN . '/index.php');
 gp_defined('debug_path',				CMS_DOMAIN . '/index.php/Debug');
 
-gp_defined('gpversion',					'5.2-rc');
+gp_defined('gpversion',					'5.3-p8 b3');
 gp_defined('gp_random',					\gp\tool::RandomString());
 
 
@@ -157,7 +158,8 @@ if ( function_exists('date_default_timezone_set') ){
  * @return false Always returns false so the standard PHP error handler is also used
  *
  */
-function showError($errno, $errmsg, $filename, $linenum, $vars, $backtrace=null){
+function showError($errno, $errmsg, $filename, $linenum, $vars=null, $backtrace=null): bool
+{
 	global $wbErrorBuffer, $addon_current_id, $page, $addon_current_version, $config, $addonFolderName;
 	static $reported = [];
 
@@ -187,7 +189,7 @@ function showError($errno, $errmsg, $filename, $linenum, $vars, $backtrace=null)
 
 	// since we supported older versions of php, there may be a lot of strict errors
 	if( $errno === E_STRICT ){
-		return;
+		return true;
 	}
 
 	//get the backtrace and function where the error was thrown
@@ -226,7 +228,7 @@ function showError($errno, $errmsg, $filename, $linenum, $vars, $backtrace=null)
 			}
 
 		//if it's a core error, it should be in the include folder
-		}elseif( strpos($filename, '/include/') === false ){
+		}elseif(!str_contains($filename, '/include/')){
 			return false;
 		}
 
@@ -412,7 +414,7 @@ function msg(){
 
 
 /**
- * add message only if admin user is logged in 
+ * add message only if admin user is logged in
  * @since 5.2
  *
  */
@@ -575,7 +577,7 @@ function IncludeScript($file, $include_variation = 'include_once', $globals=arra
 	//check to see if it exists
 	$include_variation = str_replace('_if', '', $include_variation, $has_if);
 	if( $has_if && !$exists ){
-		return;
+		return true;
 	}
 
 	//check for fatal errors
@@ -680,7 +682,7 @@ function pre($mixed){
  * @deprecated 2.6
  */
 function showArray($mixed){
-	trigger_error('Deprecated function showArray(). Use pre() instead'); 
+	trigger_error('Deprecated function showArray(). Use pre() instead');
 }
 
 

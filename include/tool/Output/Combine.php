@@ -54,35 +54,47 @@ class Combine{
 			'type'			=> 'css',
 		],
 
+	    //jquery migrate
+		'migrate' => [
+			'file'			=> '/include/thirdparty/js/jquery-migrate.min.js',
+			'package'		=> 'jquery',
+			'label'			=> 'Migrate',
+			'cdn'		 => [
+				'CloudFlare'	=> '//cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.4.0/jquery-migrate.min.js',
+				'Jsdelivr'		=> '//cdn.jsdelivr.net/npm/jquery-migrate@3.4.0/dist/jquery-migrate.min.js',
+			],
+		],
+		
 		//jquery
 		'jquery' => [
-			'file'			=> '/include/thirdparty/js/jquery.js',
+			'file'			=> '/include/thirdparty/js/jquery.min.js',   //3.6.0
+			'requires'		=> 'migrate',
 			'package'		=> 'jquery',
 			'label'			=> 'jQuery',
 			'cdn'		 => [
-				'CloudFlare'	=> '//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js',
-				'Google'		=> '//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js',
+				'CloudFlare'	=> '//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js',
+				'Jsdelivr'		=> '//cdn.jsdelivr.net/gh/jquery/jquery@3.6.0/dist/jquery.min.js',
 			],
 		],
-
+				
 		//jquery ui core
 		'ui-theme' => [
 			'file'			=> '/include/thirdparty/jquery_ui/jquery-ui.min.css',
 			'type'			=> 'css',
 			'package'		=> 'jquery_ui',
 			'cdn'		 => [
-				'CloudFlare'	=> '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css',
-				'Google'		=> '//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css',
+				'CloudFlare'	=> '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.min.css',
+				'Jsdelivr'		=> '//cdn.jsdelivr.net/npm/jquery-ui@1.13.2/dist/themes/smoothness/jquery-ui.min.css',
 			],
 		],
 
 		'ui-core' => [
-			'file'			=> '/include/thirdparty/jquery_ui/core.js',
+			'file'			=> '/include/thirdparty/jquery_ui/jquery-ui.min.js',  //core.js',
 			'package'		=> 'jquery_ui',
 			'label'			=> 'jQuery UI',
 			'cdn'		 => [
-				'CloudFlare'	=> '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js',
-				'Google'		=> '//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js',
+				'CloudFlare'	=> '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js',
+				'Jsdelivr'		=> '//cdn.jsdelivr.net/npm/jquery-ui@1.13.2/dist/jquery-ui.min.js',
 			],
 		],
 
@@ -289,7 +301,7 @@ class Combine{
 			'requires'	 => ['effects-core'],
 			'package'		=> 'jquery_ui',
 		],
-
+		
 		//html5shiv
 		'html5shiv' => [
 			'file'			=> '/include/thirdparty/js/shiv/html5shiv.js',
@@ -556,7 +568,7 @@ class Combine{
 		],
 
 		'bootstrap4-util' => [
-			'file'			=> '/include/thirdparty/Bootstrap4/js/util.min.js',
+			'file'			=> '/include/thirdparty/Bootstrap4/js/utils.min.js',
 			'package'		=> 'bootstrap4',
 		],
 
